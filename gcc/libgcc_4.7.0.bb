@@ -1,6 +1,6 @@
 require gcc-${PV}.inc
 
-PR = "r0"
+PR = "r1"
 
 INHIBIT_DEFAULT_DEPS = "1"
 DEPENDS = "virtual/${TARGET_PREFIX}gcc virtual/${TARGET_PREFIX}g++"
@@ -36,6 +36,9 @@ do_install () {
 	else
 		mv ${D}${libdir}/libgcc* ${D}${base_libdir} || true
 	fi
+
+	chmod +x ${D}${base_libdir}/libgcc_s.so.*
+        chown -R root:root ${D}
 }
 
 do_package_write_ipk[depends] += "virtual/libc:do_package"

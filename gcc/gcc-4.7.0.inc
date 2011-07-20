@@ -42,8 +42,12 @@ SRC_URI = "git://git.kernel.org/pub/scm/devel/gcc/hjl/x86.git;protocol=git;branc
 	   file://gcc-poison-parameters.patch \
 	   file://GPLUSPLUS_INCLUDE_DIR_with_sysroot.patch \
 	   file://COLLECT_GCC_OPTIONS.patch \
+           file://use-defaults.h-and-t-oe-in-B.patch \
 	  "
-S = "${WORKDIR}/git"
+#S = "${WORKDIR}/git"
+S = "${TMPDIR}/work-shared/gcc-${PV}/git"
+B = "${WORKDIR}/git/build.${HOST_SYS}.${TARGET_SYS}"
+ 
 
 SRC_URI[md5sum] = "93d1c436bf991564524701259b6285a2"
 SRC_URI[sha256sum] = "23bd0013d76ac6fb4537e5e8f4e5947129362dcc32f0d08563b7d4d9e44c0e17"
