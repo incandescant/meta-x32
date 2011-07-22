@@ -44,7 +44,7 @@ FILES_glibc = "${glibcfiles}"
 FILES_${PN} = "${glibcfiles}"
 FILES_ldd${PKGSUFFIX} = "${bindir}/ldd"
 FILES_libsegfault${PKGSUFFIX} = "${base_libdir}/libSegFault*"
-FILES_glibc-extra-nss = "${base_libdir}/libnss*"
+FILES_glibc-extra-nss = "${base_libdir}/libnss_*-*.so ${base_libdir}/libnss_*.so.*"
 FILES_sln = "${base_sbindir}/sln"
 FILES_glibc-dev = "${glibcdevfiles}"
 FILES_${PN}-dev = "${glibcdevfiles}"
@@ -52,11 +52,13 @@ FILES_glibc-dbg = "${glibcdbgfiles}"
 FILES_${PN}-dbg = "${glibcdbgfiles}"
 FILES_nscd${PKGSUFFIX} = "${sbindir}/nscd* ${sysconfdir}/nscd* ${sysconfdir}/init.d/nscd*"
 FILES_glibc-utils = "${bindir}/* ${sbindir}/*"
+RDEPENDS_glibc-utils += "bash"
 FILES_glibc-gconv = "${libdir}/gconv/*"
 FILES_catchsegv${PKGSUFFIX} = "${bindir}/catchsegv"
 RDEPENDS_catchsegv${PKGSUFFIX} = "libsegfault"
 FILES_glibc-pcprofile = "${base_libdir}/libpcprofile.so"
-FILES_glibc-thread-db = "${base_libdir}/libthread_db*"
+FILES_glibc-thread-db${PKGSUFFIX} = "${base_libdir}/libthread_db.so.* ${base_libdir}/libthread_db-*.so"
+
 RPROVIDES_glibc-dev += "libc-dev"
 
 SUMMARY_sln = "The static ln."
@@ -72,21 +74,32 @@ DESCRIPTION_glibc-utils = "Miscellaneous utilities including getconf, iconf, loc
 
 EXTRA_OEMAKE += "rootsbindir=${base_sbindir}"
 
-inherit libc-common
+inherit libc-common multilib_header
+
+do_install_append () {
+       rm -f ${D}${sysconfdir}/localtime
+#       oe_multilib_header bits/syscall.h
+}
 
 do_install_locale () {
 	dest=${D}/${includedir}/glibc-locale-internal-${MULTIMACH_TARGET_SYS}
 	install -d ${dest}${base_libdir} ${dest}${bindir} ${dest}${libdir} ${dest}${datadir}
-	cp -fpPR ${D}${base_libdir}/* ${dest}${base_libdir}
-	cp -fpP ${D}${bindir}/localedef ${dest}${bindir}
-        mv ${D}${libdir}/gconv ${dest}${libdir}
+        if [ "${base_libdir}" != "${libdir}" ]; then
+                cp -fpPR ${D}${base_libdir}/* ${dest}${base_libdir}
+        fi
+        if [ -f ${D}${bindir}/localedef ]; then
+                mv -f ${D}${bindir}/localedef ${dest}${bindir}
+        fi
+        if [ -f ${D}${libdir}/gconv ]; then
+                mv -f ${D}${libdir}/gconv ${dest}${libdir}
+        fi
 	cp -fpPR ${D}${libdir}/* ${dest}${libdir}
         mv ${D}${datadir}/i18n ${dest}${datadir}
 	cp -fpPR ${D}${datadir}/* ${dest}${datadir}
 	cp -fpPR ${WORKDIR}/SUPPORTED ${dest}
 }
 
-addtask do_install_locale after do_install before do_populate_sysroot
+addtask do_install_locale after do_install before do_populate_sysroot do_package
 
 PACKAGE_PREPROCESS_FUNCS += "glibc_package_preprocess"
 

@@ -53,6 +53,8 @@ SRC_URI = " \
 	   file://nptl-crosscompile.patch \
 	   file://fix_library_path.patch \
 	   "
+#           file://arch-ia32.patch 
+
 LIC_FILES_CHKSUM = "file://LICENSES;md5=98a1128c4b58120182cbea3b1752d8b9 \
       file://COPYING;md5=393a5ca445f6965873eca0259a17f833 \
       file://posix/rxspencer/COPYRIGHT;md5=dc5485bb394a13b2332ec1c785f5d83a \

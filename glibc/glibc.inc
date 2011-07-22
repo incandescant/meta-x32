@@ -20,6 +20,12 @@ STAGINGCC = "gcc-cross-intermediate"
 STAGINGCC_virtclass-nativesdk = "gcc-crosssdk-intermediate"
 PATH_prepend = "${STAGING_BINDIR_TOOLCHAIN}.${STAGINGCC}:"
 
+# eglibc uses PARALLELMFLAGS variable to pass parallel build info so transfer
+# PARALLEL_MAKE into PARALLELMFLAGS and empty out PARALLEL_MAKE
+GLIBCPARALLELISM := "PARALLELMFLAGS="${PARALLEL_MAKE}""
+EXTRA_OEMAKE += ${GLIBCPARALLELISM}
+PARALLEL_MAKE = ""
+
 TOOLCHAIN_OPTIONS = " --sysroot=${STAGING_DIR_TCBOOTSTRAP}"
 
 # siteconfig.bbclass runs configure which needs a working compiler
@@ -39,6 +45,10 @@ inherit autotools
 
 GLIBC_EXTRA_OECONF ?= ""
 INHIBIT_DEFAULT_DEPS = "1"
+
+do_configure_prepend() {
+       sed -e "s#@BASH@#/bin/sh#" -i ${S}/elf/ldd.bash.in
+}
 
 do_rig_locales() {
 	set -x
