@@ -3,13 +3,12 @@ require linux-libc-headers.inc
 INHIBIT_DEFAULT_DEPS = "1"
 DEPENDS += "unifdef-native"
 
-SRCREV = "81a169a5d4eeba0e626883ffdc5dd77d7114f68e"
-PV = "2.6.38.y+git${SRCPV}"
-PV = "2.6.38.y"
+SRCREV = "17c08b4e3e2e37ca52315ef394fed08ee36cf261"
+PV = "3.1+git${SRCPV}"
+PV = "3.1"
 PR = "r0"
 
-#SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/hjl/linux-2.6.38.y.git;protocol=git;nocheckout=1;branch=hjl/x32/master"
-SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/hjl/linux-2.6.38.y.git;protocol=git;branch=hjl/x32/master"
+SRC_URI = "git://github.com/hjl-tools/linux.git;protocal=git;branch=hjl/x32/lfs/v3.1"
 SRC_URI += " file://connector-msg-size-fix.patch"
 
 S = "${WORKDIR}/git"
