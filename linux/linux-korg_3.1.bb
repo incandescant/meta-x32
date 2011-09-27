@@ -1,23 +1,21 @@
 inherit kernel
 require recipes-kernel/linux/linux-yocto.inc
 
-#KMACHINE = "yocto/standard/auto-bsp"
 KMACHINE = "x32"
-#YOCTO_KERNEL_EXTERNAL_BRANCH ?= "yocto/standard/auto-bsp"
-YOCTO_KERNEL_EXTERNAL_BRANCH="hjl/x32/master"
+YOCTO_KERNEL_EXTERNAL_BRANCH="hjl/x32/lfs/v3.1"
+YOCTO_KERNEL_META_DATA=
 
 KBRANCH = ${KMACHINE}
 KMETA = meta
 
-#SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git;protocol=git;nocheckout=1"
-SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/hjl/linux-2.6.38.y.git;nocheckout=1;branch=hjl/x32/master \
+SRC_URI = "git://github.com/hjl-tools/linux.git;nocheckout=1;branch=hjl/x32/lfs/v3.1 \
             file://defconfig"
 
 SRCREV=${AUTOREV}
+SRCREV="17c08b4e3e2e37ca52315ef394fed08ee36cf261"
 # SRCREV_pn-linux-korg = 
 
-#LINUX_VERSION ?= "2.6.39"
-LINUX_VERSION = "2.6.38.y"
+LINUX_VERSION = "3.1"
 KERNEL_REVISION_CHECKING=
 LOCALCOUNT = "0"
 LINUX_VERSION_EXTENSION ?= "-yoctized-${LINUX_KERNEL_TYPE}"
