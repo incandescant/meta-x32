@@ -1,8 +1,9 @@
 require glibc.inc
 
-PV = "2.14+git${SRCPV}"
+SRCREV = "30ab7bbaa8d31b5ce674c9efb33d524a2301b62c"
 PV = "2.14"
 PR = "r1"
+PV_append = "+git${SRCPV}"
 
 DEPENDS += "gperf-native"
 FILESPATHPKG =. "glibc-git:"
@@ -40,12 +41,9 @@ python __anonymous () {
 
 RDEPENDS_${PN}-dev = "linux-libc-headers-dev"
 
-GLIBC_BRANCH="glibc-2_14"
-#git://localhost/home/nitin/prj/git.kernel.org.pub.scm.devel.glibc.hjl.x86.git;protocol=file;branch=nitin/merged 
 
-SRCREV = "91f2acdd45955af5c48ff4ef2f2fec17cf6229ca"
 SRC_URI = " \
-	   git://git.kernel.org/pub/scm/devel/glibc/hjl/x86.git;protocol=git;branch=hjl/x32/sunrpc \
+	   git://github.com/hjl-tools/glibc.git;protocol=git;branch=hjl/x32/lfs/master \
 	   http://pkgs.fedoraproject.org/repo/pkgs/glibc/glibc-ports-2.14.tar.xz/05c85905b43021a81318c3aa81718019/glibc-ports-2.14.tar.xz \
            file://shorten-build-commands.patch \
            file://etc/ld.so.conf \
@@ -61,7 +59,6 @@ LIC_FILES_CHKSUM = "file://LICENSES;md5=98a1128c4b58120182cbea3b1752d8b9 \
       file://COPYING.LIB;md5=bbb461211a33b134d42ed5ee802b37ff "
 
 SRC_URI_append_virtclass-nativesdk = " file://ld-search-order.patch"
-#S = "${WORKDIR}/${GLIBC_BRANCH}/libc"
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build-${TARGET_SYS}"
 
