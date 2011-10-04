@@ -61,19 +61,27 @@ SYSTEMHEADERS = "${target_includedir}"
 SYSTEMLIBS = "${target_base_libdir}/"
 SYSTEMLIBS1 = "${target_libdir}/"
 
-do_configure_prepend () {
-       # Change the default dynamic linker path, only useful for SDK, other's value
-       # are not changed according to the SYSTEMLIBS_DIR
-       sed -i ${S}/gcc/config/*/linux*.h -e \
-               's#\(GLIBC_DYNAMIC_LINKER[^ ]*\)\( *"/lib.*\)#\1 SYSTEMLIBS_DIR\2#'
+do_headerfix () {
+	# Change the default dynamic linker path, in case $base_liddir is non-standard
+	# (e.g. in multilib or sdk cases)
+	#
+	# We want something like the following:
+	# 	#define GLIBC_DYNAMIC_LINKER64 "/lib64/ld-linux-x86-64.so.2"
+	# becomes
+	#	#define GLIBC_DYNAMIC_LINKER64 SYSTEMLIBS_DIR "ld-linux-x86-64.so.2"
+	#
+	sed -i ${S}/gcc/config/*/linux*.h -e \
+		's#\(GLIBC_DYNAMIC_LINKER[^ ]*\) \( *"/lib.*\)/\(.*\)#\1 SYSTEMLIBS_DIR "\3#'
+}
 
-       SYSTEMLIBS_DIR=`dirname ${SYSTEMLIBS}`
-       [ "$SYSTEMLIBS_DIR" = "/" ] && SYSTEMLIBS_DIR=""
-       # teach gcc to find correct target includedir when checking libc ssp support
-       mkdir -p ${B}/gcc
-       echo "NATIVE_SYSTEM_HEADER_DIR = ${SYSTEMHEADERS}" > ${B}/gcc/t-oe
-       cat ${S}/gcc/defaults.h | grep -v "\#endif.*GCC_DEFAULTS_H" > ${B}/gcc/defaults.h.new
-       cat >>${B}/gcc/defaults.h.new <<_EOF
+addtask headerfix after do_unpack before do_patch
+
+do_configure_prepend () {
+	# teach gcc to find correct target includedir when checking libc ssp support
+	mkdir -p ${B}/gcc
+	echo "NATIVE_SYSTEM_HEADER_DIR = ${SYSTEMHEADERS}" > ${B}/gcc/t-oe
+	cat ${S}/gcc/defaults.h | grep -v "\#endif.*GCC_DEFAULTS_H" > ${B}/gcc/defaults.h.new
+	cat >>${B}/gcc/defaults.h.new <<_EOF
 #ifndef STANDARD_INCLUDE_DIR
 #define STANDARD_INCLUDE_DIR "${SYSTEMHEADERS}"
 #endif
@@ -83,10 +91,10 @@ do_configure_prepend () {
 #ifndef STANDARD_STARTFILE_PREFIX_2
 #define STANDARD_STARTFILE_PREFIX_2 "${SYSTEMLIBS1}"
 #endif
-#define SYSTEMLIBS_DIR "$SYSTEMLIBS_DIR"
+#define SYSTEMLIBS_DIR "${SYSTEMLIBS}"
 #endif /* ! GCC_DEFAULTS_H */
 _EOF
-       mv ${B}/gcc/defaults.h.new ${B}/gcc/defaults.h
+	mv ${B}/gcc/defaults.h.new ${B}/gcc/defaults.h
 }
 
 do_configure () {
@@ -114,6 +122,7 @@ do_configure () {
 	export LDFLAGS_FOR_BUILD="${BUILD_LDFLAGS}"
 	export ARCH_FLAGS_FOR_TARGET="${ARCH_FLAGS_FOR_TARGET}"
 	(cd ${S} && gnu-configize) || die "failure running gnu-configize"
+
 	oe_runconf
 }
 

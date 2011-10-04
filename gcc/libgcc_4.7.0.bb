@@ -1,7 +1,5 @@
 require gcc-${PV}.inc
 
-PR = "r1"
-
 INHIBIT_DEFAULT_DEPS = "1"
 DEPENDS = "virtual/${TARGET_PREFIX}gcc virtual/${TARGET_PREFIX}g++"
 
@@ -14,11 +12,9 @@ FILES_${PN} = "${base_libdir}/libgcc*.so.*"
 FILES_${PN}-dev = " \
   ${base_libdir}/libgcc*.so \
   ${libdir}/${TARGET_SYS}/${BINV}/crt* \
+  ${libdir}/${TARGET_SYS}/${BINV}/libgcov.a \
   ${libdir}/${TARGET_SYS}/${BINV}/libgcc*"
 
-do_fetch[noexec] = "1"
-do_unpack[noexec] = "1"
-do_patch[noexec] = "1"
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
@@ -37,13 +33,13 @@ do_install () {
 		mv ${D}${libdir}/libgcc* ${D}${base_libdir} || true
 	fi
 
+	chown -R root:root ${D}
 	chmod +x ${D}${base_libdir}/libgcc_s.so.*
-        chown -R root:root ${D}
 }
 
-do_package_write_ipk[depends] += "virtual/libc:do_package"
-do_package_write_deb[depends] += "virtual/libc:do_package"
-do_package_write_rpm[depends] += "virtual/libc:do_package"
+do_package_write_ipk[depends] += "virtual/${MLPREFIX}libc:do_package"
+do_package_write_deb[depends] += "virtual/${MLPREFIX}libc:do_package"
+do_package_write_rpm[depends] += "virtual/${MLPREFIX}libc:do_package"
 
 BBCLASSEXTEND = "nativesdk"
 

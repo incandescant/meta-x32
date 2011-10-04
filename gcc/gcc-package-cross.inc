@@ -20,6 +20,7 @@ do_install () {
 	install -d $dest
 	for t in ar as ld nm objcopy objdump ranlib strip g77 gcc cpp gfortran; do
 		ln -sf ${BINRELPATH}/${TARGET_PREFIX}$t $dest$t
+		ln -sf ${BINRELPATH}/${TARGET_PREFIX}$t ${dest}${TARGET_PREFIX}$t
 	done
 
 	# Remove things we don't need but keep share/java
@@ -28,26 +29,26 @@ do_install () {
 	done
 
 	# We use libiberty from binutils
-        find ${D}${exec_prefix}/lib -name libiberty.a | xargs rm -f
-        find ${D}${exec_prefix}/lib -name libiberty.h | xargs rm -f
+	find ${D}${exec_prefix}/lib -name libiberty.a | xargs rm -f
+	find ${D}${exec_prefix}/lib -name libiberty.h | xargs rm -f
 
 	# gcc-runtime installs libgcc into a special location in staging since it breaks doing a standalone build
-        case ${PN} in
-                *gcc-cross|*gcc-crosssdk)
-                        dest=${D}/${includedir}/gcc-build-internal-${MULTIMACH_TARGET_SYS}
-                        oe_runmake "DESTDIR=$dest" libdir=${target_libdir} base_libdir=${target_base_libdir} prefix=${target_prefix} exec_prefix=${target_exec_prefix} install-target-libgcc
+	case ${PN} in
+		*gcc-cross|*gcc-crosssdk)
+			dest=${D}/${includedir}/gcc-build-internal-${MULTIMACH_TARGET_SYS}
+			oe_runmake "DESTDIR=$dest" libdir=${target_libdir} base_libdir=${target_base_libdir} prefix=${target_prefix} exec_prefix=${target_exec_prefix} install-target-libgcc
 
 			# Ideally here we'd override the libgcc Makefile's idea of slibdir but
 			# for now, we just move the files to the correct location
 
-                        install -d $dest${target_base_libdir}
-                        mv $dest${target_exec_prefix}/${TARGET_SYS}/lib*/* $dest${target_base_libdir}
-                        rm -rf $dest${target_exec_prefix}/${TARGET_SYS}
+			install -d $dest${target_base_libdir}
+			mv $dest${target_exec_prefix}/${TARGET_SYS}/lib*/* $dest${target_base_libdir}
+			rm -rf $dest${target_exec_prefix}/${TARGET_SYS}
 
 			# Also need to move gcc from /usr/lib/gcc/* to /usr/lib/ else the search paths won't find the crt*.o files
 
-                        mv $dest${target_libdir}/gcc/* $dest${target_libdir}/
-                        rmdir $dest${target_libdir}/gcc
-                ;;
-        esac
+			mv $dest${target_libdir}/gcc/* $dest${target_libdir}/
+			rmdir $dest${target_libdir}/gcc
+		;;
+	esac
 }

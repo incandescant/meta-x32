@@ -12,6 +12,8 @@ FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/gcc-${PV}"
 def get_gcc_fpu_setting(bb, d):
     if bb.data.getVar('TARGET_FPU', d, 1) in [ 'soft' ]:
         return "--with-float=soft"
+    if bb.data.getVar('TARGET_FPU', d, 1) in [ 'ppc-efd' ]:
+        return "--enable-e500_double"
     return ""
 
 def get_gcc_mips_plt_setting(bb, d):
@@ -38,17 +40,18 @@ ${GNU_MIRROR}/gcc/	http://gcc.get-software.com/releases/ \n \
 gcclibdir = "${libdir}/gcc"
 BINV = "${PV}"
 #S = "${WORKDIR}/gcc-${PV}"
-S = "${TMPDIR}/work-shared/gcc-${PV}/gcc-${PV}"
+S = "${TMPDIR}/work-shared/gcc-${PV}-${PR}/gcc-${PV}"
 B = "${WORKDIR}/gcc-${PV}/build.${HOST_SYS}.${TARGET_SYS}"
 
 # SS means Shared Stamps directory
-SS = "${TMPDIR}/stamps/work-shared/gcc-${PV}"
+SS = "${TMPDIR}/stamps/work-shared/gcc-${PV}-${PR}"
 do_fetch[stamp-base] = "${SS}"
 do_unpack[stamp-base] = "${SS}"
+do_headerfix[stamp-base] = "${SS}"
 do_patch[stamp-base] = "${SS}"
 
 # SW means Shared Work directory
-SW = "${TMPDIR}/work-shared/gcc-${PV}"
+SW = "${TMPDIR}/work-shared/gcc-${PV}-${PR}"
 WORKDIR_task-unpack = "${SW}"
 WORKDIR_task-patch = "${SW}"
 
@@ -59,17 +62,16 @@ target_prefix ?= "${prefix}"
 
 CLEANFUNCS += "workshared_clean"
 # The do_clean should be exclusive since share ${S}
-do_clean[lockfiles] = "${TMPDIR}/stamps/work-shared/gcc-${PV}.clean.lock"
+do_clean[lockfiles] = "${SW}.clean.lock"
 
 python workshared_clean () {
-       """clear the source directory"""
-       dir = bb.data.expand("${SW}", d)
-       bb.note("Removing " + dir)
-       oe.path.remove(dir)
+	"""clear the source directory"""
+	dir = bb.data.expand("${SW}", d)
+	bb.note("Removing " + dir)
+	oe.path.remove(dir)
 
-       """clear the the stamps in work-shared"""
-       dir = "%s.*" % bb.data.expand(d.getVarFlag('do_fetch', 'stamp-base', True), d)
-       bb.note("Removing " + dir)
-       oe.path.remove(dir)
+	"""clear the the stamps in work-shared"""
+	dir = "%s.*" % bb.data.expand(d.getVarFlag('do_fetch', 'stamp-base', True), d)
+	bb.note("Removing " + dir)
+	oe.path.remove(dir)
 }
-
