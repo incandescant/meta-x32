@@ -7,10 +7,10 @@ require gcc-common.inc
 
 require gcc-4_7-branch-backports.inc
 
-SRCREV = "0bdfcc6b066c4ae92347949d798aab38321d95a2"
-#PV = "4.7.0+git${SRCPV}"
+SRCREV = "177844"
 PV = "4.7.0"
 PR = "r0"
+PR_append = "+svn${SRCPV}"
 
 DEPENDS =+ "mpfr gmp libmpc cloog ppl"
 NATIVEDEPS = "mpfr-native gmp-native gettext-native libmpc-native cloog-native ppl-native"
@@ -23,7 +23,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=59530bdf33659b29e73d4adb9f9f6552 \
                    file://COPYING.LIB;md5=2d5025d4aa3495befef8f17206a5b0a1 \
 		   file://COPYING.RUNTIME;md5=fe60d87048567d4fe8c8a0ed2448bcc8"
 
-SRC_URI = "git://git.kernel.org/pub/scm/devel/gcc/hjl/x86.git;protocol=git;branch=hjl/x32/master \
+SRC_URI = "svn://gcc.gnu.org/svn/gcc/branches/;module=x32;proto=http \
 	   file://gcc-4.3.1-ARCH_FLAGS_FOR_TARGET.patch \
 	   file://cache-amnesia.patch \
 	   file://gcc-flags-for-build.patch \
@@ -45,7 +45,7 @@ SRC_URI = "git://git.kernel.org/pub/scm/devel/gcc/hjl/x86.git;protocol=git;branc
            file://use-defaults.h-and-t-oe-in-B.patch \
 	  "
 #S = "${WORKDIR}/git"
-S = "${TMPDIR}/work-shared/gcc-${PV}/git"
+S = "${TMPDIR}/work-shared/gcc-${PV}/x32"
 B = "${WORKDIR}/git/build.${HOST_SYS}.${TARGET_SYS}"
  
 
