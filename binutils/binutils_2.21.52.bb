@@ -26,7 +26,7 @@ SRC_URI = "\
      file://clone-shadow.patch \
      "
 
-SRC_URI[md5sum] = "75a384212d95e896da49741148d7927a"
-SRC_URI[sha256sum] = "7cad747e7aefca204049c880dde422ccb59bd31a5329ad8ccaa08b7812d575bf"
+SRC_URI[md5sum] = "2cbf33adfd6c5a8b764b2d8145bba653"
+SRC_URI[sha256sum] = "79cc256f2bae4ea7b0cdb2ffee54e8c59faabd8969b587b1957a0f1351ef66a6"
 
 BBCLASSEXTEND = "native"
