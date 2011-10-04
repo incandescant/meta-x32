@@ -18,10 +18,10 @@ DEPENDS = "gmp"
 
 PR = "r0"
 
-SRC_URI = "http://www.cs.unipr.it/ppl/Download/ftp/ppl/ppl/releases/0.11.2/ppl-0.11.2.tar.bz2 "
+SRC_URI = "ftp://ftp.cs.unipr.it/pub/ppl/releases/0.11.2/ppl-0.11.2.tar.gz"
 
-SRC_URI[md5sum] = "c24429e6c3bc97d45976a63f40f489a1"
-SRC_URI[sha256sum] = "e3fbd1c19ef44c6f020951807cdb6fc6a8153cd3a5c53b0ab9cf4c4f6e8cbbeb"
+SRC_URI[md5sum] = "ce014f153a28006009db207ca953a984"
+SRC_URI[sha256sum] = "666542b853beeb5793cd327fff8f231a8317e162654e817f441427fe1f85b835"
 
 inherit autotools
 acpaths = "-I ${S}/m4"
