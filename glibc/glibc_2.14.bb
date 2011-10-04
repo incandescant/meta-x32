@@ -53,6 +53,10 @@ SRC_URI = " \
 	   "
 #           file://arch-ia32.patch 
 
+SRC_URI[md5sum] = "05c85905b43021a81318c3aa81718019"
+SRC_URI[sha256sum] = "3691677a855fd5caf4c90ff922c132a7d2b966279a342733860b0c9084a155d9"
+
+
 LIC_FILES_CHKSUM = "file://LICENSES;md5=98a1128c4b58120182cbea3b1752d8b9 \
       file://COPYING;md5=393a5ca445f6965873eca0259a17f833 \
       file://posix/rxspencer/COPYRIGHT;md5=dc5485bb394a13b2332ec1c785f5d83a \
@@ -67,6 +71,8 @@ export libc_cv_slibdir = "${base_libdir}"
 export libc_cv_forced_unwind = "yes"
 export libc_cv_c_cleanup = "yes"
 export ac_cv_header_cpuid_h = "yes"
+export libc_cv_ctors_header = "yes"
+export libc_cv_gcc_builtin_expect = "yes"
 
 EXTRA_OECONF = "--enable-kernel=${OLDEST_KERNEL} \
                 --without-cvs --disable-profile --disable-debug --without-gd \
