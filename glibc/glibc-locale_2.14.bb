@@ -1,5 +1,5 @@
 INHIBIT_DEFAULT_DEPS = "1"
-LICENSE = "LGPL"
+LICENSE = "GPLv2 & LGPLv2.1"
 
 BPN = "glibc"
 
@@ -26,7 +26,7 @@ BINARY_LOCALE_ARCHES ?= "arm.* i[3-6]86 x86_64 powerpc mips"
 # set "0" for qemu emulation of native localedef for locale generation
 LOCALE_GENERATION_WITH_CROSS-LOCALEDEF = "1"
 
-PR = "r1"
+PR = "x32.r0"
 
 PKGSUFFIX = ""
 PKGSUFFIX_virtclass-nativesdk = "-nativesdk"
@@ -38,9 +38,32 @@ PACKAGES = "localedef${PKGSUFFIX} ${PN}-dbg"
 PACKAGES_DYNAMIC = "locale-base-* \
                     glibc-gconv-*${PKGSUFFIX}  glibc-charmap-*  glibc-localedata-*  glibc-binary-localedata-*"
 
+# Create a glibc-binaries package
+ALLOW_EMPTY_${BPN}-binaries = "1"
+PACKAGES += "${BPN}-binaries"
+RRECOMMENDS_${BPN}-binaries =  "${@" ".join([p for p in d.getVar('PACKAGES', True).split() if p.find("glibc-binary") != -1])}"
+
+# Create a glibc-charmaps package
+ALLOW_EMPTY_${BPN}-charmaps = "1"
+PACKAGES += "${BPN}-charmaps"
+RRECOMMENDS_${BPN}-charmaps =  "${@" ".join([p for p in d.getVar('PACKAGES', True).split() if p.find("glibc-charmap") != -1])}"
+
+# Create a glibc-gconvs package
+ALLOW_EMPTY_${BPN}-gconvs = "1"
+PACKAGES += "${BPN}-gconvs"
+RRECOMMENDS_${BPN}-gconvs =  "${@" ".join([p for p in d.getVar('PACKAGES', True).split() if p.find("glibc-gconv") != -1])}"
+
+# Create a glibc-localedatas package
+ALLOW_EMPTY_${BPN}-localedatas = "1"
+PACKAGES += "${BPN}-localedatas"
+RRECOMMENDS_${BPN}-localedatas =  "${@" ".join([p for p in d.getVar('PACKAGES', True).split() if p.find("glibc-localedata") != -1])}"
 
 DESCRIPTION_localedef = "glibc: compile locale definition files"
 
+# glibc-gconv is dynamically added into PACKAGES, thus
+# FILES_glibc-gconv will not be automatically extended in multilib.
+# Explicitly add ${MLPREFIX} for FILES_glibc-gconv.
+FILES_${MLPREFIX}glibc-gconv = "${libdir}/gconv/*"
 FILES_${PN}-dbg += "${libdir}/gconv/.debug/*"
 FILES_localedef${PKGSUFFIX} = "${bindir}/localedef"
 

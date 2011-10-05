@@ -2,26 +2,46 @@ require glibc.inc
 
 SRCREV = "30ab7bbaa8d31b5ce674c9efb33d524a2301b62c"
 PV = "2.14"
-PR = "r1"
-PV_append = "+git${SRCPV}"
 
 DEPENDS += "gperf-native"
+PR = "x32.r0"
+PR_append = "+git${SRCPV}"
 FILESPATHPKG =. "glibc-git:"
 
-ARM_INSTRUCTION_SET = "arm"
+GLIBC_BRANCH="hjl/x32/lfs/master"
+SRC_URI = " \
+	   git://github.com/hjl-tools/glibc.git;protocol=git;branch=${GLIBC_BRANCH} \
+	   http://pkgs.fedoraproject.org/repo/pkgs/glibc/glibc-ports-2.14.tar.xz/05c85905b43021a81318c3aa81718019/glibc-ports-2.14.tar.xz \
+           file://shorten-build-commands.patch \
+           file://etc/ld.so.conf \
+           file://generate-supported.mk \
+	   file://nptl-crosscompile.patch \
+	   "
+SRC_URI[md5sum] = "05c85905b43021a81318c3aa81718019"
+SRC_URI[sha256sum] = "3691677a855fd5caf4c90ff922c132a7d2b966279a342733860b0c9084a155d9"
+LIC_FILES_CHKSUM = "file://LICENSES;md5=98a1128c4b58120182cbea3b1752d8b9 \
+      file://COPYING;md5=393a5ca445f6965873eca0259a17f833 \
+      file://posix/rxspencer/COPYRIGHT;md5=dc5485bb394a13b2332ec1c785f5d83a \
+      file://COPYING.LIB;md5=bbb461211a33b134d42ed5ee802b37ff "
+
+SRC_URI_append_virtclass-nativesdk = " file://ld-search-order.patch"
+S = "${WORKDIR}/git"
+B = "${WORKDIR}/build-${TARGET_SYS}"
 
 PACKAGES_DYNAMIC = "libc6*"
 RPROVIDES_${PN}-dev = "libc6-dev virtual-libc-dev"
+RDEPENDS_${PN}-dev = "linux-libc-headers-dev"
+PROVIDES_${PN}-dbg = "glibc-dbg"
 
 # the -isystem in bitbake.conf screws up glibc do_stage
 BUILD_CPPFLAGS = "-I${STAGING_INCDIR_NATIVE}"
-TARGET_CPPFLAGS = "-I${STAGING_DIR_TARGET}${includedir}"
+TARGET_CPPFLAGS = "-I${STAGING_DIR_TARGET}${layout_includedir}"
 
 GLIBC_ADDONS ?= "ports,nptl,libidn"
 
-GLIBC_BROKEN_LOCALES = " _ER _ET so_ET yn_ER sid_ET tr_TR mn_MN gez_ET gez_ER bn_BD te_IN wae_CH "
+GLIBC_BROKEN_LOCALES = " _ER _ET so_ET yn_ER sid_ET tr_TR mn_MN gez_ET gez_ER bn_BD te_IN wae_CH es_CR.ISO-8859-1"
 
-FILESPATH = "${@base_set_filespath([ '${FILE_DIRNAME}/glibc-${PV}', '${FILE_DIRNAME}/glibc-2.4', '${FILE_DIRNAME}/glibc', '${FILE_DIRNAME}/files', '${FILE_DIRNAME}' ], d)}"
+FILESPATH = "${@base_set_filespath([ '${FILE_DIRNAME}/files' ], d)}"
 
 #
 # For now, we will skip building of a gcc package if it is a uclibc one
@@ -38,33 +58,6 @@ python __anonymous () {
         raise bb.parse.SkipPackage("incompatible with target %s" %
                                    bb.data.getVar('TARGET_OS', d, 1))
 }
-
-RDEPENDS_${PN}-dev = "linux-libc-headers-dev"
-
-
-SRC_URI = " \
-	   git://github.com/hjl-tools/glibc.git;protocol=git;branch=hjl/x32/lfs/master \
-	   http://pkgs.fedoraproject.org/repo/pkgs/glibc/glibc-ports-2.14.tar.xz/05c85905b43021a81318c3aa81718019/glibc-ports-2.14.tar.xz \
-           file://shorten-build-commands.patch \
-           file://etc/ld.so.conf \
-           file://generate-supported.mk \
-	   file://nptl-crosscompile.patch \
-	   file://fix_library_path.patch \
-	   "
-#           file://arch-ia32.patch 
-
-SRC_URI[md5sum] = "05c85905b43021a81318c3aa81718019"
-SRC_URI[sha256sum] = "3691677a855fd5caf4c90ff922c132a7d2b966279a342733860b0c9084a155d9"
-
-
-LIC_FILES_CHKSUM = "file://LICENSES;md5=98a1128c4b58120182cbea3b1752d8b9 \
-      file://COPYING;md5=393a5ca445f6965873eca0259a17f833 \
-      file://posix/rxspencer/COPYRIGHT;md5=dc5485bb394a13b2332ec1c785f5d83a \
-      file://COPYING.LIB;md5=bbb461211a33b134d42ed5ee802b37ff "
-
-SRC_URI_append_virtclass-nativesdk = " file://ld-search-order.patch"
-S = "${WORKDIR}/git"
-B = "${WORKDIR}/build-${TARGET_SYS}"
 
 # We need this for nativesdk
 export libc_cv_slibdir = "${base_libdir}"
@@ -91,7 +84,7 @@ do_unpack_append() {
 do_move_ports() {
         if test -d ${WORKDIR}/glibc-ports-${PV} ; then
 	    rm -rf ${S}/ports
-	    mv ${WORKDIR}/glibc-ports-${PV} ${S}/ports
+            mv ${WORKDIR}/glibc-ports-${PV} ${S}/ports
 	fi
 }
 
@@ -126,9 +119,12 @@ do_compile () {
 			rpcgen -h $r -o $h || bbwarn "unable to generate header for $r"
 		done
 	)
-}
+	echo "Adjust ldd script"
+	[ -z "${RTLDLIST}" ] && return
+	sed -i ${B}/elf/ldd -e 's#^\(RTLDLIST=\)"\(.*\)"$#\1\2#'
+	sed -i ${B}/elf/ldd -e 's#^\(RTLDLIST=\)\(.*\)$#\1"${RTLDLIST} \2"#'
 
-require glibc-stage.inc
+}
 
 require glibc-package.inc
 

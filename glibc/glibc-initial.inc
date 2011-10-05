@@ -1,7 +1,7 @@
 SECTION = "libs"
 DEPENDS = "virtual/${TARGET_PREFIX}gcc-initial linux-libc-headers"
 PROVIDES = "virtual/${TARGET_PREFIX}libc-initial"
-FILESPATH = "${@base_set_filespath([ '${FILE_DIRNAME}/glibc-${PV}', '${FILE_DIRNAME}/glibc-2.4', '${FILE_DIRNAME}/glibc', '${FILE_DIRNAME}/files', '${FILE_DIRNAME}' ], d)}"
+FILESPATH = "${@base_set_filespath([ '${FILE_DIRNAME}/files' ], d)}"
 
 PACKAGES = ""
 PACKAGES_DYNAMIC = ""
@@ -12,11 +12,13 @@ STAGINGCC_virtclass-nativesdk = "gcc-crosssdk-initial"
 do_configure () {
 	sed -ie 's,{ (exit 1); exit 1; }; },{ (exit 0); }; },g' ${S}/configure
 	chmod +x ${S}/configure
-	find ${S} -name "configure" | xargs touch
+        (cd ${S} && gnu-configize) || die "failure in running gnu-configize"
+        find ${S} -name "configure" | xargs touch
 	${S}/configure --host=${TARGET_SYS} --build=${BUILD_SYS} \
+		--prefix=/usr \
 		--without-cvs --disable-sanity-checks \
 		--with-headers=${STAGING_DIR_TARGET}${includedir} \
-		--enable-hacker-mode
+		--enable-hacker-mode --enable-addons
 	if grep -q GLIBC_2.3 ${S}/ChangeLog; then
 		# glibc-2.3.x passes cross options to $(CC) when generating errlist-compat.c, which fails without a real cross-compiler.
 		# Fortunately, we don't need errlist-compat.c, since we just need .h files,
@@ -58,6 +60,10 @@ do_install () {
 	for t in linux asm asm-generic; do
 		ln -s ${STAGING_DIR_TARGET}${includedir}/$t ${D}${includedir}/
 	done
+}
+
+do_install_locale() {
+	:
 }
 
 do_siteconfig () {
