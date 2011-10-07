@@ -56,7 +56,7 @@ SRC_URI = "svn://gcc.gnu.org/svn/gcc/branches/;module=${BRANCH};proto=http \
            file://use-defaults.h-and-t-oe-in-B.patch \
 	  "
 #S = "${WORKDIR}/git"
-S = "${TMPDIR}/work-shared/gcc-${PV}/x32"
+S = "${TMPDIR}/work-shared/gcc-${PV}-${PR}/x32"
 B = "${WORKDIR}/git/build.${HOST_SYS}.${TARGET_SYS}"
  
 
