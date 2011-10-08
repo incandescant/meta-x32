@@ -78,7 +78,6 @@ EXTRA_OECONF_BASE = " --enable-lto \
 			--disable-bootstrap \
 			--disable-libgomp \
 			--disable-libmudflap \
-			--with-linker-hash-style=${LINKER_HASH_STYLE} \
 			--enable-cheaders=c_global \
 			--enable-x32 "
 
