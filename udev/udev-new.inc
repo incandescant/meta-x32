@@ -15,7 +15,7 @@ RPROVIDES_${PN} = "hotplug"
 RRECOMMENDS_${PN} += "udev-extraconf udev-cache usbutils-ids pciutils-ids"
 RDEPENDS_libudev = "${PN} (= ${EXTENDPKGV})"
 
-SRC_URI = "${KERNELORG_MIRROR}/linux/utils/kernel/hotplug/udev-${PV}.tar.gz \
+SRC_URI = "http://ftp.de.debian.org/debian/pool/main/u/udev/udev_${PV}.orig.tar.bz2 \
            file://run.rules \
            file://udev.rules \
            file://devfs-udev.rules \
