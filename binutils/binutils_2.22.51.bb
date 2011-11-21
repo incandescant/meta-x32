@@ -1,6 +1,6 @@
 require binutils.inc
 
-PR = "r3"
+PR = "r0"
 
 LIC_FILES_CHKSUM="\
     file://src-release;endline=17;md5=4830a9ef968f3b18dd5e9f2c00db2d35\
@@ -27,7 +27,7 @@ SRC_URI = "\
      file://binutils-powerpc-e5500.patch \
      "
 
-SRC_URI[md5sum] = "2cbf33adfd6c5a8b764b2d8145bba653"
-SRC_URI[sha256sum] = "79cc256f2bae4ea7b0cdb2ffee54e8c59faabd8969b587b1957a0f1351ef66a6"
+SRC_URI[md5sum] = "7664ec97d28b949349983686565c2773"
+SRC_URI[sha256sum] = "242306366d64d7b1fb299b47dd1e518a42a655acd570fdf59edb425d08e82dcd"
 
 BBCLASSEXTEND = "native"

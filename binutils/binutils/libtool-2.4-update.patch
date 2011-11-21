@@ -1,9 +1,9 @@
 Upstream-Status: Inappropriate [embedded specific]
 
-Index: binutils-2.21.52/libtool.m4
+Index: binutils-2.22.51/libtool.m4
 ===================================================================
---- binutils-2.21.52.orig/libtool.m4
-+++ binutils-2.21.52/libtool.m4
+--- binutils-2.22.51.orig/libtool.m4
++++ binutils-2.22.51/libtool.m4
 @@ -1,7 +1,8 @@
  # libtool.m4 - Configure libtool for the host system. -*-Autoconf-*-
  #
@@ -1823,10 +1823,10 @@ Index: binutils-2.21.52/libtool.m4
 +_LT_DECL([to_tool_file_cmd], [lt_cv_to_tool_file_cmd],
 +         [0], [convert $build files to toolchain format])dnl
 +])# _LT_PATH_CONVERSION_FUNCTIONS
-Index: binutils-2.21.52/ltmain.sh
+Index: binutils-2.22.51/ltmain.sh
 ===================================================================
---- binutils-2.21.52.orig/ltmain.sh
-+++ binutils-2.21.52/ltmain.sh
+--- binutils-2.22.51.orig/ltmain.sh
++++ binutils-2.22.51/ltmain.sh
 @@ -1,10 +1,9 @@
 -# Generated from ltmain.m4sh.
  
@@ -7053,10 +7053,10 @@ Index: binutils-2.21.52/ltmain.sh
  
  if test -n "$exec_cmd"; then
    eval exec "$exec_cmd"
-Index: binutils-2.21.52/ltoptions.m4
+Index: binutils-2.22.51/ltoptions.m4
 ===================================================================
---- binutils-2.21.52.orig/ltoptions.m4
-+++ binutils-2.21.52/ltoptions.m4
+--- binutils-2.22.51.orig/ltoptions.m4
++++ binutils-2.22.51/ltoptions.m4
 @@ -8,7 +8,7 @@
  # unlimited permission to copy and/or distribute it, with or without
  # modifications, as long as this notice is preserved.
@@ -7066,10 +7066,10 @@ Index: binutils-2.21.52/ltoptions.m4
  
  # This is to help aclocal find these macros, as it can't see m4_define.
  AC_DEFUN([LTOPTIONS_VERSION], [m4_if([1])])
-Index: binutils-2.21.52/ltversion.m4
+Index: binutils-2.22.51/ltversion.m4
 ===================================================================
---- binutils-2.21.52.orig/ltversion.m4
-+++ binutils-2.21.52/ltversion.m4
+--- binutils-2.22.51.orig/ltversion.m4
++++ binutils-2.22.51/ltversion.m4
 @@ -7,17 +7,17 @@
  # unlimited permission to copy and/or distribute it, with or without
  # modifications, as long as this notice is preserved.
@@ -7094,10 +7094,10 @@ Index: binutils-2.21.52/ltversion.m4
  _LT_DECL(, macro_version, 0, [Which release of libtool.m4 was used?])
  _LT_DECL(, macro_revision, 0)
  ])
-Index: binutils-2.21.52/lt~obsolete.m4
+Index: binutils-2.22.51/lt~obsolete.m4
 ===================================================================
---- binutils-2.21.52.orig/lt~obsolete.m4
-+++ binutils-2.21.52/lt~obsolete.m4
+--- binutils-2.22.51.orig/lt~obsolete.m4
++++ binutils-2.22.51/lt~obsolete.m4
 @@ -7,7 +7,7 @@
  # unlimited permission to copy and/or distribute it, with or without
  # modifications, as long as this notice is preserved.
@@ -7107,11 +7107,11 @@ Index: binutils-2.21.52/lt~obsolete.m4
  
  # These exist entirely to fool aclocal when bootstrapping libtool.
  #
-Index: binutils-2.21.52/configure
+Index: binutils-2.22.51/configure
 ===================================================================
---- binutils-2.21.52.orig/configure
-+++ binutils-2.21.52/configure
-@@ -7813,7 +7813,7 @@ case " $build_configdirs " in
+--- binutils-2.22.51.orig/configure
++++ binutils-2.22.51/configure
+@@ -7788,7 +7788,7 @@ case " $build_configdirs " in
      # For an installed makeinfo, we require it to be from texinfo 4.7 or
      # higher, else we use the "missing" dummy.
      if ${MAKEINFO} --version \
@@ -7120,10 +7120,10 @@ Index: binutils-2.21.52/configure
        :
      else
        MAKEINFO="$MISSING makeinfo"
-Index: binutils-2.21.52/bfd/configure
+Index: binutils-2.22.51/bfd/configure
 ===================================================================
---- binutils-2.21.52.orig/bfd/configure
-+++ binutils-2.21.52/bfd/configure
+--- binutils-2.22.51.orig/bfd/configure
++++ binutils-2.22.51/bfd/configure
 @@ -667,6 +667,9 @@ OTOOL
  LIPO
  NMEDIT
@@ -8462,7 +8462,7 @@ Index: binutils-2.21.52/bfd/configure
    fi
  
  # More hacks to build DLLs on Windows.
-@@ -16626,13 +17281,20 @@ exeext='`$ECHO "$exeext" | $SED "$delay_
+@@ -16629,13 +17284,20 @@ exeext='`$ECHO "$exeext" | $SED "$delay_
  lt_unset='`$ECHO "$lt_unset" | $SED "$delay_single_quote_subst"`'
  lt_SP2NL='`$ECHO "$lt_SP2NL" | $SED "$delay_single_quote_subst"`'
  lt_NL2SP='`$ECHO "$lt_NL2SP" | $SED "$delay_single_quote_subst"`'
@@ -8483,7 +8483,7 @@ Index: binutils-2.21.52/bfd/configure
  STRIP='`$ECHO "$STRIP" | $SED "$delay_single_quote_subst"`'
  RANLIB='`$ECHO "$RANLIB" | $SED "$delay_single_quote_subst"`'
  old_postinstall_cmds='`$ECHO "$old_postinstall_cmds" | $SED "$delay_single_quote_subst"`'
-@@ -16647,14 +17309,17 @@ lt_cv_sys_global_symbol_pipe='`$ECHO "$l
+@@ -16650,14 +17312,17 @@ lt_cv_sys_global_symbol_pipe='`$ECHO "$l
  lt_cv_sys_global_symbol_to_cdecl='`$ECHO "$lt_cv_sys_global_symbol_to_cdecl" | $SED "$delay_single_quote_subst"`'
  lt_cv_sys_global_symbol_to_c_name_address='`$ECHO "$lt_cv_sys_global_symbol_to_c_name_address" | $SED "$delay_single_quote_subst"`'
  lt_cv_sys_global_symbol_to_c_name_address_lib_prefix='`$ECHO "$lt_cv_sys_global_symbol_to_c_name_address_lib_prefix" | $SED "$delay_single_quote_subst"`'
@@ -8502,7 +8502,7 @@ Index: binutils-2.21.52/bfd/configure
  DSYMUTIL='`$ECHO "$DSYMUTIL" | $SED "$delay_single_quote_subst"`'
  NMEDIT='`$ECHO "$NMEDIT" | $SED "$delay_single_quote_subst"`'
  LIPO='`$ECHO "$LIPO" | $SED "$delay_single_quote_subst"`'
-@@ -16687,12 +17352,12 @@ hardcode_shlibpath_var='`$ECHO "$hardcod
+@@ -16690,12 +17355,12 @@ hardcode_shlibpath_var='`$ECHO "$hardcod
  hardcode_automatic='`$ECHO "$hardcode_automatic" | $SED "$delay_single_quote_subst"`'
  inherit_rpath='`$ECHO "$inherit_rpath" | $SED "$delay_single_quote_subst"`'
  link_all_deplibs='`$ECHO "$link_all_deplibs" | $SED "$delay_single_quote_subst"`'
@@ -8516,7 +8516,7 @@ Index: binutils-2.21.52/bfd/configure
  file_list_spec='`$ECHO "$file_list_spec" | $SED "$delay_single_quote_subst"`'
  variables_saved_for_relink='`$ECHO "$variables_saved_for_relink" | $SED "$delay_single_quote_subst"`'
  need_lib_prefix='`$ECHO "$need_lib_prefix" | $SED "$delay_single_quote_subst"`'
-@@ -16747,8 +17412,13 @@ reload_flag \
+@@ -16750,8 +17415,13 @@ reload_flag \
  OBJDUMP \
  deplibs_check_method \
  file_magic_cmd \
@@ -8530,7 +8530,7 @@ Index: binutils-2.21.52/bfd/configure
  STRIP \
  RANLIB \
  CC \
-@@ -16758,12 +17428,14 @@ lt_cv_sys_global_symbol_pipe \
+@@ -16761,12 +17431,14 @@ lt_cv_sys_global_symbol_pipe \
  lt_cv_sys_global_symbol_to_cdecl \
  lt_cv_sys_global_symbol_to_c_name_address \
  lt_cv_sys_global_symbol_to_c_name_address_lib_prefix \
@@ -8546,7 +8546,7 @@ Index: binutils-2.21.52/bfd/configure
  DSYMUTIL \
  NMEDIT \
  LIPO \
-@@ -16779,7 +17451,6 @@ no_undefined_flag \
+@@ -16782,7 +17454,6 @@ no_undefined_flag \
  hardcode_libdir_flag_spec \
  hardcode_libdir_flag_spec_ld \
  hardcode_libdir_separator \
@@ -8554,7 +8554,7 @@ Index: binutils-2.21.52/bfd/configure
  exclude_expsyms \
  include_expsyms \
  file_list_spec \
-@@ -16815,6 +17486,7 @@ module_cmds \
+@@ -16818,6 +17489,7 @@ module_cmds \
  module_expsym_cmds \
  export_symbols_cmds \
  prelink_cmds \
@@ -8562,7 +8562,7 @@ Index: binutils-2.21.52/bfd/configure
  postinstall_cmds \
  postuninstall_cmds \
  finish_cmds \
-@@ -17594,7 +18266,8 @@ $as_echo X"$file" |
+@@ -17597,7 +18269,8 @@ $as_echo X"$file" |
  # NOTE: Changes made to this file will be lost: look at ltmain.sh.
  #
  #   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
@@ -8572,7 +8572,7 @@ Index: binutils-2.21.52/bfd/configure
  #   Written by Gordon Matzigkeit, 1996
  #
  #   This file is part of GNU Libtool.
-@@ -17697,19 +18370,42 @@ SP2NL=$lt_lt_SP2NL
+@@ -17700,19 +18373,42 @@ SP2NL=$lt_lt_SP2NL
  # turn newlines into spaces.
  NL2SP=$lt_lt_NL2SP
  
@@ -8616,7 +8616,7 @@ Index: binutils-2.21.52/bfd/configure
  # A symbol stripping program.
  STRIP=$lt_STRIP
  
-@@ -17739,6 +18435,12 @@ global_symbol_to_c_name_address=$lt_lt_c
+@@ -17742,6 +18438,12 @@ global_symbol_to_c_name_address=$lt_lt_c
  # Transform the output of nm in a C name address pair when lib prefix is needed.
  global_symbol_to_c_name_address_lib_prefix=$lt_lt_cv_sys_global_symbol_to_c_name_address_lib_prefix
  
@@ -8629,7 +8629,7 @@ Index: binutils-2.21.52/bfd/configure
  # The name of the directory that contains temporary libtool files.
  objdir=$objdir
  
-@@ -17748,6 +18450,9 @@ MAGIC_CMD=$MAGIC_CMD
+@@ -17751,6 +18453,9 @@ MAGIC_CMD=$MAGIC_CMD
  # Must we lock files when doing compilation?
  need_locks=$lt_need_locks
  
@@ -8639,7 +8639,7 @@ Index: binutils-2.21.52/bfd/configure
  # Tool to manipulate archived DWARF debug symbol files on Mac OS X.
  DSYMUTIL=$lt_DSYMUTIL
  
-@@ -17862,12 +18567,12 @@ with_gcc=$GCC
+@@ -17865,12 +18570,12 @@ with_gcc=$GCC
  # Compiler flag to turn off builtin functions.
  no_builtin_flag=$lt_lt_prog_compiler_no_builtin_flag
  
@@ -8655,7 +8655,7 @@ Index: binutils-2.21.52/bfd/configure
  # Compiler flag to prevent dynamic linking.
  link_static_flag=$lt_lt_prog_compiler_static
  
-@@ -17954,9 +18659,6 @@ inherit_rpath=$inherit_rpath
+@@ -17957,9 +18662,6 @@ inherit_rpath=$inherit_rpath
  # Whether libtool must link a program against all its dependency libraries.
  link_all_deplibs=$link_all_deplibs
  
@@ -8665,7 +8665,7 @@ Index: binutils-2.21.52/bfd/configure
  # Set to "yes" if exported symbols are required.
  always_export_symbols=$always_export_symbols
  
-@@ -17972,6 +18674,9 @@ include_expsyms=$lt_include_expsyms
+@@ -17975,6 +18677,9 @@ include_expsyms=$lt_include_expsyms
  # Commands necessary for linking programs (against libraries) with templates.
  prelink_cmds=$lt_prelink_cmds
  
@@ -8675,7 +8675,7 @@ Index: binutils-2.21.52/bfd/configure
  # Specify filename containing input files.
  file_list_spec=$lt_file_list_spec
  
-@@ -18004,210 +18709,169 @@ ltmain="$ac_aux_dir/ltmain.sh"
+@@ -18007,210 +18712,169 @@ ltmain="$ac_aux_dir/ltmain.sh"
    # if finds mixed CR/LF and LF-only lines.  Since sed operates in
    # text mode, it properly converts lines to CR/LF.  This bash problem
    # is reportedly fixed, but why not run on old versions too?
@@ -9046,10 +9046,10 @@ Index: binutils-2.21.52/bfd/configure
      (rm -f "$ofile" && cp "$cfgfile" "$ofile" && rm -f "$cfgfile")
    chmod +x "$ofile"
  
-Index: binutils-2.21.52/opcodes/configure
+Index: binutils-2.22.51/opcodes/configure
 ===================================================================
---- binutils-2.21.52.orig/opcodes/configure
-+++ binutils-2.21.52/opcodes/configure
+--- binutils-2.22.51.orig/opcodes/configure
++++ binutils-2.22.51/opcodes/configure
 @@ -647,6 +647,9 @@ OTOOL
  LIPO
  NMEDIT
@@ -10975,10 +10975,10 @@ Index: binutils-2.21.52/opcodes/configure
      (rm -f "$ofile" && cp "$cfgfile" "$ofile" && rm -f "$cfgfile")
    chmod +x "$ofile"
  
-Index: binutils-2.21.52/binutils/configure
+Index: binutils-2.22.51/binutils/configure
 ===================================================================
---- binutils-2.21.52.orig/binutils/configure
-+++ binutils-2.21.52/binutils/configure
+--- binutils-2.22.51.orig/binutils/configure
++++ binutils-2.22.51/binutils/configure
 @@ -655,8 +655,11 @@ OTOOL
  LIPO
  NMEDIT
@@ -12897,10 +12897,10 @@ Index: binutils-2.21.52/binutils/configure
      (rm -f "$ofile" && cp "$cfgfile" "$ofile" && rm -f "$cfgfile")
    chmod +x "$ofile"
  
-Index: binutils-2.21.52/gas/configure
+Index: binutils-2.22.51/gas/configure
 ===================================================================
---- binutils-2.21.52.orig/gas/configure
-+++ binutils-2.21.52/gas/configure
+--- binutils-2.22.51.orig/gas/configure
++++ binutils-2.22.51/gas/configure
 @@ -645,8 +645,11 @@ OTOOL
  LIPO
  NMEDIT
@@ -14816,10 +14816,10 @@ Index: binutils-2.21.52/gas/configure
      (rm -f "$ofile" && cp "$cfgfile" "$ofile" && rm -f "$cfgfile")
    chmod +x "$ofile"
  
-Index: binutils-2.21.52/gprof/configure
+Index: binutils-2.22.51/gprof/configure
 ===================================================================
---- binutils-2.21.52.orig/gprof/configure
-+++ binutils-2.21.52/gprof/configure
+--- binutils-2.22.51.orig/gprof/configure
++++ binutils-2.22.51/gprof/configure
 @@ -629,8 +629,11 @@ OTOOL
  LIPO
  NMEDIT
@@ -16738,10 +16738,10 @@ Index: binutils-2.21.52/gprof/configure
      (rm -f "$ofile" && cp "$cfgfile" "$ofile" && rm -f "$cfgfile")
    chmod +x "$ofile"
  
-Index: binutils-2.21.52/ld/configure
+Index: binutils-2.22.51/ld/configure
 ===================================================================
---- binutils-2.21.52.orig/ld/configure
-+++ binutils-2.21.52/ld/configure
+--- binutils-2.22.51.orig/ld/configure
++++ binutils-2.22.51/ld/configure
 @@ -645,8 +645,11 @@ OTOOL
  LIPO
  NMEDIT
@@ -18668,10 +18668,10 @@ Index: binutils-2.21.52/ld/configure
      (rm -f "$ofile" && cp "$cfgfile" "$ofile" && rm -f "$cfgfile")
    chmod +x "$ofile"
  
-Index: binutils-2.21.52/bfd/configure.in
+Index: binutils-2.22.51/bfd/configure.in
 ===================================================================
---- binutils-2.21.52.orig/bfd/configure.in
-+++ binutils-2.21.52/bfd/configure.in
+--- binutils-2.22.51.orig/bfd/configure.in
++++ binutils-2.22.51/bfd/configure.in
 @@ -536,7 +536,7 @@ changequote(,)dnl
    x=`sed -n -e 's/^[ 	]*PICFLAG[ 	]*=[ 	]*//p' < ../libiberty/Makefile | sed -n '$p'`
  changequote([,])dnl
@@ -18681,10 +18681,10 @@ Index: binutils-2.21.52/bfd/configure.in
    fi
  
  # More hacks to build DLLs on Windows.
-Index: binutils-2.21.52/opcodes/configure.in
+Index: binutils-2.22.51/opcodes/configure.in
 ===================================================================
---- binutils-2.21.52.orig/opcodes/configure.in
-+++ binutils-2.21.52/opcodes/configure.in
+--- binutils-2.22.51.orig/opcodes/configure.in
++++ binutils-2.22.51/opcodes/configure.in
 @@ -134,7 +134,7 @@ changequote(,)dnl
    x=`sed -n -e 's/^[ 	]*PICFLAG[ 	]*=[ 	]*//p' < ../libiberty/Makefile | sed -n '$p'`
  changequote([,])dnl
