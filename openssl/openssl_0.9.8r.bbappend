@@ -1,7 +1,7 @@
 THISDIR := "${@os.path.dirname(bb.data.getVar('FILE', d, True))}"
 FILESPATH =. "${@base_set_filespath(["${THISDIR}/files"], d)}:"
 
-PR .= ".x32"
+PR .= ".x32.1"
 
 SRC_URI += "file://x32_compile_fix.patch"
 
