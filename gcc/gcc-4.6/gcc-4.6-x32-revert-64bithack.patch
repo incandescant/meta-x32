@@ -1,0 +1,13 @@
+--- gcc-4_6-branch/gcc/config/i386/t-linux64.hack	2011-11-30 09:12:07.564090198 -0800
++++ gcc-4_6-branch/gcc/config/i386/t-linux64	2011-11-30 09:12:53.923831250 -0800
+@@ -24,8 +24,8 @@
+ # MULTILIB_OSDIRNAMES according to what is found on the target.
+ 
+ MULTILIB_OPTIONS = m64/m32
+-MULTILIB_DIRNAMES = . .
+-MULTILIB_OSDIRNAMES = ../$(shell basename $(base_libdir)) ../$(shell basename $(base_libdir))
++MULTILIB_DIRNAMES = 64 32 
++MULTILIB_OSDIRNAMES = ../lib64 $(if $(wildcard $(shell echo $(SYSTEM_HEADER_DIR))/../../usr/lib32),../lib32,../lib)
+ 
+ LIBGCC = stmp-multilib
+ INSTALL_LIBGCC = install-multilib
