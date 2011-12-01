@@ -1,7 +1,7 @@
 THISDIR := "${@os.path.dirname(bb.data.getVar('FILE', d, True))}"
-FILESPATH =. "${@base_set_filespath(["${THISDIR}/files"], d)}:"
+FILESPATH =. "${@base_set_filespath(["${THISDIR}/openssl-1.0.0e"], d)}:"
 
-PR .= ".x32.1"
+PR .= ".x32"
 
 SRC_URI += "file://x32_compile_fix.patch"
 
@@ -74,3 +74,15 @@ do_configure () {
         fi        
 	perl ./Configure ${EXTRA_OECONF} shared --prefix=$useprefix --openssldir=${libdir}/ssl --libdir=`basename ${libdir}` $target
 }
+
+do_install () {
+        oe_runmake INSTALL_PREFIX="${D}" MANDIR="${mandir}" install
+
+        oe_libinstall -so libcrypto ${D}${libdir}
+        oe_libinstall -so libssl ${D}${libdir}
+
+        install -d ${D}${includedir}
+        cp --dereference -R include/openssl ${D}${includedir}
+        sed -i -e '1s,.*,#!${bindir}/env perl,' ${D}${libdir}/ssl/misc/CA.pl
+}
+
