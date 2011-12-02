@@ -12,14 +12,14 @@ SRC_URI = "git://github.com/hjl-tools/linux.git;nocheckout=1;branch=hjl/x32/lfs/
             file://defconfig"
 
 SRCREV=${AUTOREV}
-SRCREV="17c08b4e3e2e37ca52315ef394fed08ee36cf261"
+SRCREV="e2bf8464ddbf5da24d3d320cded5691828a91a0b"
 # SRCREV_pn-linux-korg = 
 
 LINUX_VERSION = "3.1"
 KERNEL_REVISION_CHECKING=
 LOCALCOUNT = "0"
 LINUX_VERSION_EXTENSION ?= "-yoctized-${LINUX_KERNEL_TYPE}"
-PR = "r0"
+PR = "r1"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 COMPATIBLE_MACHINE = "(qemuarm|qemux86|qemuppc|qemumips|qemux86-64)"
