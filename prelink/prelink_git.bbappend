@@ -1,5 +1,5 @@
 
-SRCREV = "72a829abd99b2e52f3fabcb9baacdecad95186a4"
+SRCREV = "00977e1d0925917f8af036d27f01d70c6ddfca47"
 
-PR .= ".x32"
+PR .= ".x32.1"
 
