@@ -3,7 +3,7 @@ THISDIR := "${@os.path.dirname(bb.data.getVar('FILE', d, True))}"
 FILESPATH =. "${@base_set_filespath(["${THISDIR}/eglibc"], d)}:"
 
 PR .= ".x32"
-SRC_URI += "file://eglibc-2.14-x32.patch"
+SRC_URI += "file://eglibc-2.15-x32.patch"
 
 # The change here is just:
 # -       cp ${S}/sysdeps/x86_64/bits/wordsize.h ${S}/sysdeps/i386/bits/wordsize.h
