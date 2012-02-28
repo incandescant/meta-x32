@@ -3,7 +3,7 @@ require linux-libc-headers.inc
 INHIBIT_DEFAULT_DEPS = "1"
 DEPENDS += "unifdef-native"
 
-SRCREV = "e2bf8464ddbf5da24d3d320cded5691828a91a0b"
+SRCREV = "79c59cbbcf675244e76ffbeb2d1c258341371d00"
 PV = "3.1+git${SRCPV}"
 PV = "3.1"
 PR = "r1"
@@ -16,7 +16,7 @@ B = "${S}"
 
 # force this to empty to prevent installation failures, we aren't
 # building a device tree as part of kern headers
-KERNEL_DEVICETREE=
+KERNEL_DEVICETREE=""
 
 set_arch() {
 	case ${TARGET_ARCH} in
